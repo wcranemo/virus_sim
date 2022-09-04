@@ -1,13 +1,15 @@
-CFLAGS=-Wall -Werror -Wfatal-errors
+CXXFLAGS=-Wall -Werror -Wfatal-errors -std=c++17
+CXX=clang++
+
 
 main: main.o Person.o
-	g++ -o main main.o Person.o
+	$(CXX) -o main main.o Person.o
 
 main.o: main.cc Person.h
-	g++ -c $(CFLAGS) main.cc
+	$(CXX) -c $(CXXFLAGS) main.cc
 
 Person.o: Person.cc Person.h
-	g++ -c $(CFLAGS) Person.cc
+	$(CXX) -c $(CXXFLAGS) Person.cc
 
 clean:
 	rm -rf *.o main

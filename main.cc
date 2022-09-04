@@ -18,7 +18,7 @@ std::ofstream myfile("output.txt"); // just so it has global scope
 
 const size_t INIT_NUM_INFECTED = 4; // how many people to infect at start
 const size_t DAY_TO_HEAL = 5; // when Person has chance of healing
-const size_t RECIPROCAL_CHANCE_TO_HEAL = 10; // each day after day 5, a 1/10 chance to be healed
+// const size_t RECIPROCAL_CHANCE_TO_HEAL = 10; // each day after day 5, a 1/10 chance to be healed
 const size_t DAY_TO_DIE = 15; // time of infection where person dies
 const size_t PERCENT_CHANCE_INFECT_HEALTHY = 5;
 const size_t PERCENT_CHANCE_INFECT_RECOVERED = 3;
