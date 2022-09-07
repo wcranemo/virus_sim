@@ -1,10 +1,8 @@
 /**
  * A simulation of a virus in a population
  * @file main.cc
-
  * @author William Crane-Morris
  * @date May 10, 2022
- * Style edits.
  */
 #include <iostream>
 #include <vector>
@@ -14,15 +12,16 @@
 
 #include "Person.h"
 
-std::ofstream myfile("output.txt"); // just so it has global scope
+// std::ofstream output_data("output.txt"); // just so it has global scope
 
-const size_t INIT_NUM_INFECTED = 4; // how many people to infect at start
+const size_t INIT_NUM_INFECTED = 1; // how many people to infect at start
 const size_t DAY_TO_HEAL = 5; // when Person has chance of healing
 // const size_t RECIPROCAL_CHANCE_TO_HEAL = 10; // each day after day 5, a 1/10 chance to be healed
 const size_t DAY_TO_DIE = 15; // time of infection where person dies
-const size_t PERCENT_CHANCE_INFECT_HEALTHY = 5;
+const size_t PERCENT_CHANCE_INFECT_HEALTHY = 10;
 const size_t PERCENT_CHANCE_INFECT_RECOVERED = 3;
 
+int main();
 
 void print_per_vect(std::vector<Person> const populace)
 {
@@ -36,15 +35,23 @@ void print_per_vect(std::vector<Person> const populace)
 /* prints and outputs a vector<size_t>
  * param vec the vector we are printing
  */
-void print_size_t_vec(std::vector<size_t> const vec)
+void print_size_t_vec(std::vector<size_t> const vec, std::ofstream &output_data, const bool prnt_in_ter)
 {
    for (size_t element : vec)
    {
-      std::cout << element << ", ";
-      myfile << element << ", ";
+      // std::cout << element << ", ";
+      output_data << element << ", ";
    }
-   std::cout << '\n';
-   myfile << '\n';
+   // std::cout << '\n';
+   output_data << '\n';
+   if (prnt_in_ter)
+   {
+      for (size_t element : vec)
+      {
+         std::cout << element << ", ";
+      }
+      std::cout << '\n';
+   }
 }
 
 /* Initializes the population
@@ -77,7 +84,7 @@ void infect_people(std::vector<Person> &populace)
 /* returns as a std::vector<size_t> the current status of all the people in the population
  * Param populace the vector holding all the Persons
  */
-std::vector<size_t> curr_aggregate_status(std::vector<Person> const populace)
+std::vector<size_t> curr_aggregate_status(std::vector<Person> const populace, const size_t time)
 {
    size_t healthy = 0;
    size_t infected = 0;
@@ -102,7 +109,7 @@ std::vector<size_t> curr_aggregate_status(std::vector<Person> const populace)
          dead += 1;
       }
    }
-   std::vector<size_t> output = {healthy, infected, recovered, dead};
+   std::vector<size_t> output = {time, healthy, infected, recovered, dead};
    return output;
 }
 
@@ -171,13 +178,14 @@ void spread_disease(std::vector<Person> &populace, size_t const population, std:
 /* implements the number of time steps and puts all the actions together in order
  * Param populace the vector holding all the Persons
  */
-void time_steps(std::vector<Person> &populace, size_t const population, size_t run_time)
+void time_steps(std::vector<Person> &populace, size_t const population,
+   size_t run_time, std::ofstream &output_data, const bool prnt_in_ter)
 {
    for (size_t time = 0; time < run_time; time++)
    {
-      std::cout << time << ", ";
-      myfile << time << ", ";
-      print_size_t_vec(curr_aggregate_status(populace));
+      // std::cout << time << ", ";
+      // output_data << time << ", ";
+      print_size_t_vec(curr_aggregate_status(populace, time), output_data, prnt_in_ter); //time, healthy, infected, recovered, dead
       for (size_t index = 0; index < population; index ++)
       {
          if (populace[index].get_status_num() == 1)
@@ -204,11 +212,17 @@ void time_steps(std::vector<Person> &populace, size_t const population, size_t r
 // controls flow of the program
 int main()
 {
+   std::ofstream output_data("output.txt");
    std::srand(std::time(0));
 
-   // std::ofstream myfile;
+   // std::ofstream output_data;
 
    // size_t day = 0;
+   bool prnt_in_ter = false;
+   std::cout << "Enter mode; manual : m or batch : b ";
+   char run_type;
+   std::cin >> run_type;
+   if(run_type == 'm'){prnt_in_ter = true;}
    std::cout << "Enter the population size: ";
    size_t population;
    std::vector<Person> populace;
@@ -230,6 +244,7 @@ int main()
    // print_per_vect(populace);
    // print_size_t_vec(curr_aggregate_status(populace));
    infect_people(populace);
+   output_data << "time, healthy_population, infected_population, recovered_population, dead_population," << '\n';
 
    // print_size_t_vec(close_contacts(populace));
 
@@ -239,7 +254,7 @@ int main()
    // spread_disease(populace, population, close_contacts(populace));
    // print_size_t_vec(curr_aggregate_status(populace));
 
-   time_steps(populace, population, sim_run_time);
+   time_steps(populace, population, sim_run_time, output_data, prnt_in_ter);
 
 
    // print_per_vect(populace);
@@ -248,6 +263,6 @@ int main()
 
    // std::cout << funk();
 
-   myfile.close();
+   output_data.close();
 
 }
