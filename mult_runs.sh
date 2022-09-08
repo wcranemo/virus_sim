@@ -3,5 +3,14 @@
 
 make     #make sure everything is up to date
 
+#params
+runs=5
+runtype="b"
+population=10000
+runtime=300
+touch out{1..$runs}.txt
 
-./main < input_params.txt
+for i in {1..$runs}; do
+   echo out${i}.txt $runtype $population $runtime | ./main
+   sleep 1
+done

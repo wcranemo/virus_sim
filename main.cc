@@ -2,7 +2,7 @@
  * A simulation of a virus in a population
  * @file main.cc
  * @author William Crane-Morris
- * @date May 10, 2022
+ * @date Sept 2022
  */
 #include <iostream>
 #include <vector>
@@ -212,7 +212,9 @@ void time_steps(std::vector<Person> &populace, size_t const population,
 // controls flow of the program
 int main()
 {
-   std::ofstream output_data("output.txt");
+   std::string outfname;
+   std::cin >> outfname;
+   std::ofstream output_data(outfname);
    std::srand(std::time(0));
 
    // std::ofstream output_data;
@@ -223,45 +225,25 @@ int main()
    char run_type;
    std::cin >> run_type;
    if(run_type == 'm'){prnt_in_ter = true;}
-   std::cout << "Enter the population size: ";
+   if(prnt_in_ter) {std::cout << "Enter the population size: ";}
+
    size_t population;
    std::vector<Person> populace;
    std::cin >> population;
    populace.resize(population);
-   std::cout << "Enter how many days the simulation will run: ";
+
+   if(prnt_in_ter) {std::cout << "Enter how many days the simulation will run: ";}
+   
    size_t sim_run_time;
    std::cin >> sim_run_time;
    fill_population(populace, population);
    set_conn_nums(populace, population, 20);
 
-   // for (Person individual : populace)
-   // {
-   //    std::cout << individual.get_max_conns() << " ";
-   // }
-   // std::cout << '\n';
-
-
-   // print_per_vect(populace);
-   // print_size_t_vec(curr_aggregate_status(populace));
    infect_people(populace);
    output_data << "time, healthy_population, infected_population, recovered_population, dead_population," << '\n';
 
-   // print_size_t_vec(close_contacts(populace));
-
-   // print_size_t_vec(curr_aggregate_status(populace));
-   // spread_disease(populace, population, close_contacts(populace));
-   // print_size_t_vec(curr_aggregate_status(populace));
-   // spread_disease(populace, population, close_contacts(populace));
-   // print_size_t_vec(curr_aggregate_status(populace));
-
    time_steps(populace, population, sim_run_time, output_data, prnt_in_ter);
 
-
-   // print_per_vect(populace);
-
-
-
-   // std::cout << funk();
 
    output_data.close();
 
