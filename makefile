@@ -12,4 +12,4 @@ Person.o: Person.cc Person.h
 	$(CXX) -c $(CXXFLAGS) Person.cc
 
 clean:
-	rm -rf *.o main
+	rm -rf *.o main #rm -ri *.o main

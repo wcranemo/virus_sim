@@ -221,7 +221,9 @@ int main()
 
    // size_t day = 0;
    bool prnt_in_ter = false;
-   std::cout << "Enter mode; manual : m or batch : b ";
+
+   // std::cout << "Enter mode; manual : m or batch : b ";
+
    char run_type;
    std::cin >> run_type;
    if(run_type == 'm'){prnt_in_ter = true;}
@@ -233,7 +235,7 @@ int main()
    populace.resize(population);
 
    if(prnt_in_ter) {std::cout << "Enter how many days the simulation will run: ";}
-   
+
    size_t sim_run_time;
    std::cin >> sim_run_time;
    fill_population(populace, population);

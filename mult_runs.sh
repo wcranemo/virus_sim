@@ -3,14 +3,17 @@
 
 make     #make sure everything is up to date
 
+rm -r *.txt
+
 #params
-runs=5
+runs=1
 runtype="b"
 population=10000
 runtime=300
 touch out{1..$runs}.txt
 
 for i in {1..$runs}; do
+   echo "running test ${i}"
    echo out${i}.txt $runtype $population $runtime | ./main
-   sleep 1
+   # sleep .1
 done
