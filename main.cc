@@ -40,7 +40,7 @@ void print_size_t_vec(std::vector<size_t> const vec, std::ofstream &output_data,
    for (size_t element : vec)
    {
       // std::cout << element << ", ";
-      output_data << element << ", ";
+      output_data << element << ",";
    }
    // std::cout << '\n';
    output_data << '\n';
@@ -48,7 +48,7 @@ void print_size_t_vec(std::vector<size_t> const vec, std::ofstream &output_data,
    {
       for (size_t element : vec)
       {
-         std::cout << element << ", ";
+         std::cout << element << ",";
       }
       std::cout << '\n';
    }
