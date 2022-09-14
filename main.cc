@@ -9,6 +9,10 @@
 #include <ctime>
 #include <cstdlib>
 #include <fstream>
+// #include<sys/types.h>
+#include <unistd.h>
+
+
 
 #include "Person.h"
 
@@ -215,7 +219,8 @@ int main()
    std::string outfname;
    std::cin >> outfname;
    std::ofstream output_data(outfname);
-   std::srand(std::time(0));
+   // std::srand(std::time(0));
+   std::srand(getpid() * time(NULL));
 
    // std::ofstream output_data;
 
