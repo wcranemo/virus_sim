@@ -6,17 +6,23 @@ make     #make sure everything is up to date
 rm -r *.txt #delete all old output files
 
 #params
-runs=5
+runs=2000 
 runtype="b"
 population=10000
 runtime=150
 touch out{1..$runs}.txt
 
+echo "running $runs tests"
+loop_percentage=0
+
 for i in {1..$runs}; do
-   echo "running test ${i}..."
-   echo out${i}.txt $runtype $population $runtime | ./main
+   # echo "running test ${i}..."
+   echo -ne "."
+   #trying to make loading bar
+   echo out${i}.txt $runtype $population $runtime | ./main &
    # sleep 1
-   echo "Done"
+   # echo "Done"
 done
+echo "sims completed"
 
 echo $runs | python mult_run_analysis.py
