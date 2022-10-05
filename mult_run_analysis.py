@@ -62,9 +62,14 @@ def find_peak_infections(all_runs):
 def graph_peak_infections(all_runs):
     """outputs a graph plotting the maximum infections of each run"""
     maxinfected_date = find_peak_infections(all_runs)
+
+    fig, ax = plt.subplots()
+
     for i in maxinfected_date:
         plt.scatter(i[1], i[0])
 
+    ax.set_xlabel("Date of peak infections")
+    ax.set_ylabel("Number of infections at peak")
     plt.show()
 
 def grap_peak_alt(all_runs):
@@ -87,6 +92,15 @@ def grap_peak_alt(all_runs):
         yvals[j[0]] += 1
         # print(j)
 
+    max_y = 0
+    max_loc = 0
+    for i in range(len(yvals[2:])):     #exclude first two entries where infection died immediately
+        if (yvals[i + 2] > max_y):
+            max_loc = i + 2
+
+    print(max_loc)
+
+
     # print(len(yvals))
     # print(yvals)
     # print(maxinfects / 2)
@@ -99,7 +113,7 @@ def grap_peak_alt(all_runs):
     # ax.set(xlim=(maxinfects - 400, maxinfects + 1))
     ax.set(xlim=(0, maxinfects + 10))
 
-    params, covariates = gaussion_fit(xvals[0 : maxinfects + 1], yvals[0: maxinfects + 1], 7800)
+    params, covariates = gaussian_fit(xvals, yvals, max_loc)
 
     ax.plot(xvals, gaussian(xvals, params[0], params[1], params[2]), 'r')
 
@@ -110,7 +124,7 @@ def gaussian(x, A, x_0, sigma):
     y = A * np.exp(-((x - x_0)**2) / (2 * (sigma ** 2)))
     return(y)
 
-def gaussion_fit(x_data, y_data, x_0_guess):
+def gaussian_fit(x_data, y_data, x_0_guess):
 
     # guesses
     A = 1
@@ -149,7 +163,7 @@ def main():
 
     # print(find_peak_infections(all_runs))
 
-    # graph_peak_infections(all_runs)
+    graph_peak_infections(all_runs)
 
     grap_peak_alt(all_runs)
     # graph_populations(runs, all_runs)
