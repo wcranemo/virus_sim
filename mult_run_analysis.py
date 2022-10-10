@@ -40,7 +40,7 @@ def graph_populations(runs, all_runs):
 
 def find_peak_infections(all_runs):
     """returns a list of highest infections, and the times for each simulation"""
-    print(len(all_runs))
+    # print(len(all_runs))
     sim_len = all_runs[0][-1][0].item() + 1  #time of last entry in time col of first run
     output = np.empty([len(all_runs), 2], dtype=int)
     for i in range(len(all_runs)):
@@ -65,8 +65,12 @@ def graph_peak_infections(all_runs):
 
     fig, ax = plt.subplots()
 
-    for i in maxinfected_date:
-        plt.scatter(i[1], i[0])
+    # for i in maxinfected_date:
+    #     plt.scatter(i[1], i[0])
+
+    ax.hist2d(maxinfected_date[:, 1], maxinfected_date[:, 0],
+    bins=(np.arange(0, 100, 2), np.arange(0, 8000, 20)), cmin=1, cmap='YlOrBr')
+    # plt.colorbar()
 
     ax.set_xlabel("Date of peak infections")
     ax.set_ylabel("Number of infections at peak")
@@ -163,10 +167,10 @@ def main():
 
     # print(find_peak_infections(all_runs))
 
-    graph_peak_infections(all_runs)
+    # graph_peak_infections(all_runs)
 
-    grap_peak_alt(all_runs)
-    # graph_populations(runs, all_runs)
+    # grap_peak_alt(all_runs)
+    graph_populations(runs, all_runs)
 
 
 

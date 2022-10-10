@@ -6,7 +6,7 @@ make     #make sure everything is up to date
 rm -r *.txt #delete all old output files
 
 #params
-runs=2000 
+runs=1
 runtype="b"
 population=10000
 runtime=150
