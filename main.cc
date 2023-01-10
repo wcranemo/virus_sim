@@ -9,6 +9,7 @@
 #include <ctime>
 #include <cstdlib>
 #include <fstream>
+#include <cmath>
 // #include<sys/types.h>
 #include <unistd.h>
 
@@ -128,6 +129,17 @@ void set_conn_nums(std::vector<Person> &populace, size_t const population, size_
    {
       size_t conns = ((upper_bound - 1) / (rand() % upper_bound + 1)) + 1;
       populace[index].set_max_connec(conns);
+   }
+}
+
+void reduce_conns(std::vector<Person> &populace, size_t const population, float const decimal)
+{
+   for (size_t index = 0; index < population; index++)
+   {
+      size_t orig_conns = populace[index].get_max_conns();
+      float temp = static_cast<float>(orig_conns);
+      size_t new_conns = static_cast<size_t>(std::round(temp * decimal));
+      populace[index].set_max_connec(new_conns);
    }
 }
 
