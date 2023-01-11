@@ -8,7 +8,7 @@ rm -r *.txt #delete all old output files
 #params
 runs=10
 runtype="b"
-population=1000000
+population=10000
 runtime=150
 touch out{1..$runs}.txt
 

@@ -195,13 +195,20 @@ void spread_disease(std::vector<Person> &populace, size_t const population, std:
  * Param populace the vector holding all the Persons
  */
 void time_steps(std::vector<Person> &populace, size_t const population,
-   size_t run_time, std::ofstream &output_data, const bool prnt_in_ter)
+   size_t run_time, std::ofstream &output_data, const bool prnt_in_ter,
+   size_t const soc_dist_thresh, float const connection_reduction)
 {
+   bool social_distanced = false;
    for (size_t time = 0; time < run_time; time++)
    {
       // std::cout << time << ", ";
       // output_data << time << ", ";
       print_size_t_vec(curr_aggregate_status(populace, time), output_data, prnt_in_ter); //time, healthy, infected, recovered, dead
+      if (curr_aggregate_status(populace, time)[2] >= soc_dist_thresh && social_distanced == false)
+      {
+         reduce_conns(populace, population, connection_reduction);
+         social_distanced = true;
+      }
       for (size_t index = 0; index < population; index ++)
       {
          if (populace[index].get_status_num() == 1)
@@ -261,7 +268,10 @@ int main()
    infect_people(populace);
    output_data << "time, healthy_population, infected_population, recovered_population, dead_population," << '\n';
 
-   time_steps(populace, population, sim_run_time, output_data, prnt_in_ter);
+   size_t soc_dist_thresh = 50000;
+   float connection_reduction = .5;
+   time_steps(populace, population, sim_run_time, output_data, prnt_in_ter,
+   soc_dist_thresh, connection_reduction);
 
 
    output_data.close();
