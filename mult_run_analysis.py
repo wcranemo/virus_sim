@@ -20,22 +20,27 @@ def graph_populations(runs, all_runs):
     recovered_clr = "g"
     dead_clr = "k"
 
+    fig, ax = plt.subplots()
+
     # put label in graph
-    plt.plot(0, all_runs[0][0][1], healthy_clr, label="Healthy")
-    plt.plot(0, all_runs[0][0][2], infected_clr, label="Infected")
-    plt.plot(0, all_runs[0][0][3], recovered_clr, label="Recovered")
-    plt.plot(0, all_runs[0][0][4], dead_clr, label="Dead")
+    ax.plot(0, all_runs[0][0][1], healthy_clr, label="Healthy")
+    ax.plot(0, all_runs[0][0][2], infected_clr, label="Infected")
+    ax.plot(0, all_runs[0][0][3], recovered_clr, label="Recovered")
+    ax.plot(0, all_runs[0][0][4], dead_clr, label="Dead")
 
 
     for i in range(runs):
         # y.append([])
         # y[i] = all_runs[i][:, 1] #living population
-        plt.plot(x, all_runs[i][:, 1], healthy_clr) #, label="Healthy"
-        plt.plot(x, all_runs[i][:, 2], infected_clr) #, label="Infected"
-        plt.plot(x, all_runs[i][:, 3], recovered_clr) #, label="Recovered"
-        plt.plot(x, all_runs[i][:, 4], dead_clr) #, label="Dead"
+        ax.plot(x, all_runs[i][:, 1], healthy_clr) #, label="Healthy"
+        ax.plot(x, all_runs[i][:, 2], infected_clr) #, label="Infected"
+        ax.plot(x, all_runs[i][:, 3], recovered_clr) #, label="Recovered"
+        ax.plot(x, all_runs[i][:, 4], dead_clr) #, label="Dead"
 
-    plt.legend()
+    ax.set_ylabel("# of People")
+    ax.set_xlabel("Days")
+
+    ax.legend()
     plt.show()
 
 def find_peak_infections(all_runs):
