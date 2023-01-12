@@ -268,8 +268,14 @@ int main()
    infect_people(populace);
    output_data << "time, healthy_population, infected_population, recovered_population, dead_population," << '\n';
 
-   size_t soc_dist_thresh = 50000;
-   float connection_reduction = .5;
+   // size_t soc_dist_thresh = 50000;
+   // float connection_reduction = .5;
+
+   size_t soc_dist_thresh;
+   float connection_reduction;
+   std::cin >> soc_dist_thresh >> connection_reduction;
+
+
    time_steps(populace, population, sim_run_time, output_data, prnt_in_ter,
    soc_dist_thresh, connection_reduction);
 

@@ -10,6 +10,10 @@ runs=10
 runtype="b"
 population=10000
 runtime=150
+# soc_dist_thresh=$population   #change this to a lower number to enact social distancing at some threshold
+soc_dist_thresh=2000
+connection_reduction=$(echo "50/100" | bc -l)
+
 touch out{1..$runs}.txt
 
 echo "running $runs tests"
@@ -18,7 +22,7 @@ loop_percentage=0
 for i in {1..$runs}; do
    # echo "running test ${i}..."
    #trying to make loading bar
-   echo out${i}.txt $runtype $population $runtime | ./main &
+   echo out${i}.txt $runtype $population $runtime $soc_dist_thresh $connection_reduction | ./main &
    # sleep 1
    echo -ne "."
 
