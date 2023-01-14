@@ -37,15 +37,15 @@ conn_red_arr[2]=$(echo "50 / 100" | bc -l)
 #    echo $i
 # done
 touch params.txt
-
+printf "social_dist_param, connection_red_param\n" >> params.txt
 for k in {1..$conn_red_params}; do
    for j in {1..$soc_dis_params}; do
       for i in {1..$runs_per_param}; do
 
-         # echo out_${j}_${i}.txt $runtype $population $runtime ${soc_dist_arr[j]} ${connection_red_arr[k]} | ./main &
+         echo out_${k}_${j}_${i}.txt $runtype $population $runtime ${soc_dist_arr[j]} ${connection_red_arr[k]} | ./main &
          # echo -ne "."
 
-         echo "conn_red = ${conn_red_arr[k]}, soc_dist_thresh = ${soc_dist_arr[j]}, run # ${i}"
+         # echo "conn_red = ${conn_red_arr[k]}, soc_dist_thresh = ${soc_dist_arr[j]}, run # ${i}"
          # echo "Done"
       done
       printf "${soc_dist_arr[j]}, ${conn_red_arr[k]} \n" >> params.txt
@@ -53,8 +53,10 @@ for k in {1..$conn_red_params}; do
    done
 done
 wait
+# echo "sleeping 5"
+# sleep 5
 # echo "sims completed"
 
 # sleep 30
 #
-# echo $runs | python mult_run_analysis.py
+echo $runs_per_param | python social_dist.py
