@@ -6,13 +6,13 @@ make     #make sure everything is up to date
 rm -r *.txt #delete all old output files
 
 #params
-runs=10
+runs=1
 runtype="b"
 population=10000
 runtime=150
 # soc_dist_thresh=$population   #change this to a lower number to enact social distancing at some threshold
-soc_dist_thresh=2000
-connection_reduction=$(echo "50/100" | bc -l)
+soc_dist_thresh=1000
+connection_reduction=$(echo "30/100" | bc -l)
 
 touch out{1..$runs}.txt
 
@@ -22,6 +22,8 @@ loop_percentage=0
 for i in {1..$runs}; do
    # echo "running test ${i}..."
    #trying to make loading bar
+   # echo $connection_reduction
+
    echo out${i}.txt $runtype $population $runtime $soc_dist_thresh $connection_reduction | ./main &
    # sleep 1
    echo -ne "."

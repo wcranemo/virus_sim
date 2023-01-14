@@ -266,14 +266,20 @@ int main()
    set_conn_nums(populace, population, 20);
 
    infect_people(populace);
-   output_data << "time, healthy_population, infected_population, recovered_population, dead_population," << '\n';
+   output_data << "time,healthy_population,infected_population,recovered_population,dead_population," << '\n';
 
    // size_t soc_dist_thresh = 50000;
    // float connection_reduction = .5;
 
    size_t soc_dist_thresh;
-   float connection_reduction;
-   std::cin >> soc_dist_thresh >> connection_reduction;
+   size_t conn_red_percent;
+   std::cin >> soc_dist_thresh >> conn_red_percent;
+
+   float connection_reduction = static_cast<float>(conn_red_percent) / static_cast<float>(100);
+
+
+
+   // std::cout << "soc_dist_thresh = " << soc_dist_thresh << ", conn_red = " << connection_reduction;
 
 
    time_steps(populace, population, sim_run_time, output_data, prnt_in_ter,
