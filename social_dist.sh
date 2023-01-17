@@ -9,7 +9,7 @@ rm -r *.txt #delete all old output files
 #test
 
 #params
-runs_per_param=2
+runs_per_param=1
 runtype="b"
 population=10000
 runtime=150
@@ -21,19 +21,19 @@ touch out{1..$runs}.txt
 
 echo "running $runs tests"
 
-soc_dis_params=4
+soc_dis_params=3
 # initializing array of param values
 soc_dist_arr[1]=1000
-soc_dist_arr[2]=2000
-soc_dist_arr[3]=5000
-soc_dist_arr[4]=$population
+soc_dist_arr[2]=5000
+soc_dist_arr[3]=$population
+# soc_dist_arr[4]=$population
 
 #percent as integer out of 100 since shell doesn't play nice with floats
 conn_red_params=2
 # conn_red_arr[1]=$(echo "80 / 100" | bc -l)
 # conn_red_arr[2]=$(echo "50 / 100" | bc -l)
-conn_red_arr[1]=80
-conn_red_arr[2]=50
+conn_red_arr[1]=60
+conn_red_arr[2]=20
 
 # for i in "${soc_dist_arr[@]}"; do
 #    echo $i

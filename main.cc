@@ -263,7 +263,7 @@ int main()
    size_t sim_run_time;
    std::cin >> sim_run_time;
    fill_population(populace, population);
-   set_conn_nums(populace, population, 20);
+   set_conn_nums(populace, population, 30);
 
    infect_people(populace);
    output_data << "time,healthy_population,infected_population,recovered_population,dead_population," << '\n';

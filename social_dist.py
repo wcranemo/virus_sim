@@ -61,7 +61,7 @@ def plot_runs(run_data_arr, var_len_arr):
     plt.show()
 
 
-def plot_alt(data_arr, ind_dict):
+def plot_alt(data_arr, ind_dict, param_arr):
 
     healthy_clr = "b"
     infected_clr = "r"
@@ -72,21 +72,29 @@ def plot_alt(data_arr, ind_dict):
 
     xs = data_arr[0][0][0][:, 0]
 
-    # axs.plot(data_arr[1][1][0][:, ind_dict["Healthy"]], healthy_clr)
-    # axs.plot(data_arr[1][1][0][:, ind_dict["Infected"]], infected_clr)
-    # axs.plot(data_arr[1][1][0][:, ind_dict["Recovered"]], recovered_clr)
-    # axs.plot(data_arr[1][1][0][:, ind_dict["Dead"]], dead_clr)
+    axs[0,0].plot(data_arr[0][0][0][:, ind_dict["Healthy"]], healthy_clr, label="Healthy")
+    axs[0,0].plot(data_arr[0][0][0][:, ind_dict["Infected"]], infected_clr, label="Infected")
+    axs[0,0].plot(data_arr[0][0][0][:, ind_dict["Recovered"]], recovered_clr, label="Recovered")
+    axs[0,0].plot(data_arr[0][0][0][:, ind_dict["Dead"]], dead_clr, label="Dead")
 
     # print("data arr shape is ", data_arr.shape)
 
     for k in range(data_arr.shape[0]):
         for j in range(data_arr.shape[1]):
+            conversion = k * data_arr.shape[1] + j
+            axs[k,j].hlines(param_arr[conversion][0], 0, xs[-1], colors='k', linestyles='dotted')
+            axs[k,j].set_title("{}% reduced contact @ {} infects".format(100 - param_arr[conversion][1], param_arr[conversion][0]))
+            print("k, j = ", k, j, "conversion = ", conversion)
             for i in range(data_arr.shape[2]):
                 axs[k,j].plot(data_arr[k][j][i][:, ind_dict["Healthy"]], healthy_clr)
                 axs[k,j].plot(data_arr[k][j][i][:, ind_dict["Infected"]], infected_clr)
                 axs[k,j].plot(data_arr[k][j][i][:, ind_dict["Recovered"]], recovered_clr)
                 axs[k,j].plot(data_arr[k][j][i][:, ind_dict["Dead"]], dead_clr)
 
+        # axs[k,0].set_title("connection reduction")
+
+    # plt.legend()
+    fig.tight_layout()
     plt.show()
 
 def main():
@@ -141,22 +149,25 @@ def main():
     # print(numpy)
 
     ind_dict = {"Healthy" : 1, "Infected" : 2, "Recovered" : 3, "Dead" : 4}
+    param_arr = np.empty([len_conn_red, len_soc_dist])
+    param_arr = np.genfromtxt('params.txt', dtype=int, delimiter=',', skip_header=1, autostrip=False)
+
 
     for k in range(len_conn_red):
         for j in range(len_soc_dist):
             for i in range(runs_per_param):
-                # df = pd.read_csv('out_{0}_{1}_{2}.txt'.format(k + 1, j + 1, i + 1))
-                # data_arr[k][j][i] = df.to_numpy()
-
                 data = np.genfromtxt('out_{0}_{1}_{2}.txt'.format(k + 1, j + 1, i + 1),
                 dtype=int, delimiter=',', skip_header=1, autostrip=False)
                 data = np.delete(data, 5, 1) #delete excess column
                 data_arr[k][j][i] = data
 
 
-    # print(data_arr[0][0][0][:, 1][:15])
+    # print(param_arr)
 
-    plot_alt(data_arr, ind_dict)
+    # print(param_arr.shape)
+    # print(data_arr.shape)
+
+    plot_alt(data_arr, ind_dict, param_arr)
 
 
 

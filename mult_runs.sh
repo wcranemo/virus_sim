@@ -6,13 +6,15 @@ make     #make sure everything is up to date
 rm -r *.txt #delete all old output files
 
 #params
-runs=1
+runs=10
 runtype="b"
 population=10000
 runtime=150
 # soc_dist_thresh=$population   #change this to a lower number to enact social distancing at some threshold
 soc_dist_thresh=1000
-connection_reduction=$(echo "30/100" | bc -l)
+
+# integer percent of 100
+connection_reduction=50
 
 touch out{1..$runs}.txt
 
